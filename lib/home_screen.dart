@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:audio_recorder/audio_recorder.dart';
+import 'package:audio_recorder_flutter/color_constants.dart';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:path_provider/path_provider.dart';
@@ -16,7 +17,7 @@ class _HomeScreenState extends State<HomeScreen> {
   bool _isPlaying = false;
   Recording _recording;
   String pathFile;
-  String tempFilename = "TempRecording"; //Filename without path or extension
+  String tempFilename = "TempRecording";
   File defaultAudioFile;
   AudioPlayer audioPlayer = new AudioPlayer();
 
@@ -57,8 +58,8 @@ class _HomeScreenState extends State<HomeScreen> {
                   child: CircularProgressIndicator(
                     strokeWidth: 14.0,
                     valueColor: _isRecording
-                        ? AlwaysStoppedAnimation<Color>(Colors.blue)
-                        : AlwaysStoppedAnimation<Color>(Colors.blueGrey[50]),
+                        ? AlwaysStoppedAnimation<Color>(ColorConstant.enabledColor)
+                        : AlwaysStoppedAnimation<Color>(ColorConstant.disabledColor),
                     value: _isRecording ? null : 100.0,
                   ),
                 ),
@@ -71,13 +72,15 @@ class _HomeScreenState extends State<HomeScreen> {
                           ? new Icon(Icons.stop, size: 36.0)
                           : new Icon(Icons.mic, size: 36.0),
                       disabledElevation: 0.0,
-                      onPressed: _isRecording ? stopRecording : startRecording,
+                      backgroundColor: _isPlaying? ColorConstant.disabledColor: ColorConstant.enabledColor,
+                      onPressed: _isPlaying? null : _isRecording ? stopRecording : startRecording,
                     ),
                     FloatingActionButton(
                       child: _isPlaying
                           ? new Icon(Icons.pause, size: 36.0)
                           : new Icon(Icons.play_arrow, size: 36.0),
                       disabledElevation: 0.0,
+                      backgroundColor: _isRecording? ColorConstant.disabledColor: ColorConstant.enabledColor,
                       onPressed: _isRecording ? null : togglePlayAudio,
                     )
                   ],
