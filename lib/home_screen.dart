@@ -64,33 +64,38 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 ),
                 Spacer(),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    new FloatingActionButton(
-                      child: _isRecording
-                          ? new Icon(Icons.stop, size: 36.0)
-                          : new Icon(Icons.mic, size: 36.0),
-                      disabledElevation: 0.0,
-                      backgroundColor: _isPlaying? ColorConstant.disabledColor: ColorConstant.enabledColor,
-                      onPressed: _isPlaying? null : _isRecording ? stopRecording : startRecording,
-                    ),
-                    FloatingActionButton(
-                      child: _isPlaying
-                          ? new Icon(Icons.pause, size: 36.0)
-                          : new Icon(Icons.play_arrow, size: 36.0),
-                      disabledElevation: 0.0,
-                      backgroundColor: _isRecording? ColorConstant.disabledColor: ColorConstant.enabledColor,
-                      onPressed: _isRecording ? null : togglePlayAudio,
-                    )
-                  ],
-                ),
+                buildButtonsRow(),
                 Spacer(),
               ],
             ),
           ),
         );
     }
+  }
+
+  Widget buildButtonsRow() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        new FloatingActionButton(
+          child: _isRecording
+              ? new Icon(Icons.stop, size: 36.0)
+              : new Icon(Icons.mic, size: 36.0),
+          disabledElevation: 0.0,
+          backgroundColor: _isPlaying? ColorConstant.disabledColor: ColorConstant.enabledColor,
+          onPressed: _isPlaying? null : _isRecording ? stopRecording : startRecording,
+        ),
+        SizedBox(width: 50,),
+        FloatingActionButton(
+          child: _isPlaying
+              ? new Icon(Icons.pause, size: 36.0)
+              : new Icon(Icons.play_arrow, size: 36.0),
+          disabledElevation: 0.0,
+          backgroundColor: _isRecording? ColorConstant.disabledColor: ColorConstant.enabledColor,
+          onPressed: _isRecording || defaultAudioFile == null ? null : togglePlayAudio,
+        )
+      ],
+    );
   }
 
   startRecording() async {
